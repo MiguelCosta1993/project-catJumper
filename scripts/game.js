@@ -2,34 +2,38 @@ class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
-
-    this.player = new Cat(400, 400);
-
-    this.fruit = new Fly(this);
-    this.fruit.setRandomPosition();
-
-    this.scoreboard = new Scoreboard(this);
-
+    this.player = new Cat(100, 400, this);
+    this.dog = new Dog(400, 710, this);
     this.setKeyBindings();
-  }
-  // continue here!
-  setKeyBindings() {
-    let rightPressed = false;
-    let leftPressed = false;
-    let spacePressed = false;
-    function keyDownHandler(e) {}
 
-    function keyUpHandler(e) {
-      if (e.key == 'Right' || e.key == 'ArrowRight') {
-        rightPressed = false;
-      } else if (e.key == 'Left' || e.key == 'ArrowLeft') {
-        leftPressed = false;
+    //this.fly = new Fly(this);
+    // this.fruit.setRandomPosition();
+
+    //this.scoreboard = new Scoreboard(this);
+  }
+
+  setKeyBindings() {
+    window.addEventListener('keydown', event => {
+      event.preventDefault();
+      switch (event.keyCode) {
+        case 32:
+          this.player.catMove('up');
+          break;
+        case 65:
+          this.player.catMove('left');
+
+          break;
+        case 68:
+          this.player.catMove('right');
+
+          break;
       }
-    }
+    });
   }
 
   runLogic() {
     this.player.runLogic();
+    this.dog.runLogic();
   }
 
   clean() {
@@ -37,9 +41,12 @@ class Game {
   }
 
   paint() {
+    //this.fruit.paint();
+    //this.scoreboard.paint();
+    this.context.fillStyle = 'green';
+    this.context.fillRect(0, 750, 1600, 100);
     this.player.paint();
-    this.fruit.paint();
-    this.scoreboard.paint();
+    this.dog.paint();
   }
 
   loop() {
@@ -52,13 +59,8 @@ class Game {
     // Paint
     this.paint();
 
-    if (this.running) {
-      setTimeout(() => {
-        this.loop();
-      }, 300);
-    }
+    setTimeout(() => {
+      this.loop();
+    }, 1000 / 60);
   }
 }
-
-document.addEventListener('keydown', keyDownHandler, false);
-document.addEventListener('keyup', keyUpHandler, false);

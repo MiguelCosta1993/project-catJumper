@@ -1,4 +1,4 @@
-class Scoreboard {
+/*class Scoreboard {
   constructor(game) {
     this.game = game;
   }
@@ -13,4 +13,4 @@ class Scoreboard {
 
     context.restore();
   }
-}
+}*/
