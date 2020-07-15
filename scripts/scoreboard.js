@@ -1,16 +1,14 @@
-/*class Scoreboard {
+class Scoreboard {
   constructor(game) {
     this.game = game;
+    this.score = 0;
   }
 
   paint() {
-    const context = this.game.context;
-    const score = this.game.player.context.save();
+    this.score = this.game.dogsBamboozled;
 
-    context.font = '32px sans-serif';
+    this.game.context.font = '16px Roboto Mono';
 
-    context.fillText('Score: ' + score, 350, 450);
-
-    context.restore();
+    this.game.context.fillText('Dogs Bamboozled x:' + this.score, 1425, 25);
   }
-}*/
+}

@@ -9,17 +9,16 @@ class Cat {
     this.game = game;
     this.catMove();
     this.direction = 'down';
+    this.jump = 0;
+    this.maxJumps = 2;
   }
-  /* checkCollisionFly() {
-    const fly = this.game.fly;
-    const x = fly.x;
-    const y = fly.y;
-    const intersection = this.checkIntersection(x, y);
-    return intersection;
-  }*/
 
   setDirection(direction) {
     this.direction = direction;
+  }
+  grounded() {
+    this.y = 730;
+    this.yVelocity = 0;
   }
 
   catMove(direction) {
@@ -31,36 +30,33 @@ class Cat {
         this.xVelocity = -5;
         break;
       case 'up':
-        this.yVelocity = -4;
+        if (this.y >= 700) {
+          this.yVelocity = -6;
+        }
         break;
-      case 'down':
-        this.y += this.yVelocity;
-        this.yVelocity += gravity;
+      case 'stopleft':
+        this.xVelocity = 0;
+        break;
+      case 'stopright':
+        this.xVelocity = 0;
         break;
     }
   }
 
   runLogic() {
-    let gravity = 0.1;
-    let friction = 0.1;
-    let jump = true;
+    let gravity = 0.3;
+    //let friction = 0.1;
 
     this.y += this.yVelocity;
     this.yVelocity += gravity;
     this.x += this.xVelocity;
 
-    this.xVelocity = this.xVelocity / (1 + friction);
+    //this.xVelocity = this.xVelocity / (1 + friction);
 
-    if (this.y >= 750 - 35) {
+    if (this.y >= 720) {
       this.yVelocity = 0;
     }
   }
-  /* const intersection = this.checkCollisionFly();
-    let flies = 0;
-    const flyCounter = [flies];
-    if (intersection) {
-      this.flyCounter.push(flies++);
-    }*/
 
   paint() {
     this.game.context.fillStyle = 'red';
