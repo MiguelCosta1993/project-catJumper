@@ -1,6 +1,6 @@
 const FLOORHEIGHT = 710;
 const DOGXPOSITION = 700;
-const MAXDOGS = 15;
+const MAXDOGS = 10;
 
 class Game {
   constructor(canvas) {
@@ -8,53 +8,17 @@ class Game {
     this.context = canvas.getContext('2d');
     this.player = new Cat(100, 400, this);
     this.dogs = [];
-    this.setKeyBindings();
     this.dogsBamboozled = 0;
     this.scoreboard = new Scoreboard(this);
     this.crash = false;
     this.gamestate = true;
+    this.difficulty = 1;
+    this.spaceDifficulty = 1;
+    this.time_since_last_difficulty_change = Date.now();
   }
-
-  setKeyBindings() {
-    window.addEventListener('keydown', event => {
-      switch (event.keyCode) {
-        case 32:
-          event.preventDefault();
-          this.player.catMove('up');
-          break;
-        case 65:
-          event.preventDefault();
-          this.player.catMove('left');
-          break;
-        case 68:
-          event.preventDefault();
-          this.player.catMove('right');
-          break;
-        case 27:
-          event.preventDefault();
-          restart();
-          break;
-      }
-    });
-    window.addEventListener('keyup', event => {
-      switch (event.keyCode) {
-        case 65:
-          event.preventDefault();
-          this.player.catMove('stopleft');
-          break;
-        case 68:
-          event.preventDefault();
-          this.player.catMove('stopright');
-          break;
-      }
-    });
-  }
-  // to-do: function to restart the main loop, ESC key will pull this function.
-  restart() {}
 
   gameOver() {
     this.gamestate = false;
-    console.log(this.gamestate);
   }
 
   checkCollision() {
@@ -71,9 +35,8 @@ class Game {
   }
 
   runLogic() {
-    // to-do: every 30 seconds increase speed of the dogs, increase number of dogs and decrease space between dogs.
     this.dogs.map(actor => {
-      actor.x = actor.x - 10;
+      actor.x = actor.x - 10 * this.difficulty;
     });
 
     if (this.dogs.length && this.dogs[0].x + this.dogs[0].w <= 0) {
@@ -81,11 +44,17 @@ class Game {
     }
     this.dogs = this.dogs.filter(dog => dog.x + dog.w > 0);
 
-    if (Math.floor(Math.random() * 100) < 10) {
+    if (Date.now() - this.time_since_last_difficulty_change > 15000) {
+      this.difficulty += 0.2;
+      this.time_since_last_difficulty_change = Date.now();
+    }
+
+    if (Math.floor(Math.random() * 100) < 50) {
       if (this.dogs.length < MAXDOGS) {
         let acceptablePosition = 0;
         while (!acceptablePosition) {
           acceptablePosition = DOGXPOSITION + Math.floor(Math.random() * 100);
+          console.log(acceptablePosition);
           if (
             this.dogs.every(
               dog =>
@@ -120,7 +89,6 @@ class Game {
       this.context.rect(0, 0, 1600, 800);
       this.context.fillStyle = 'rgba(0,0,0,1)';
       this.context.fill();
-
       this.context.font = '60px Roboto Mono';
       this.context.fillStyle = 'white';
       this.context.textAlign = 'center';
@@ -142,18 +110,5 @@ class Game {
     setTimeout(() => {
       this.loop();
     }, 1000 / 60);
-  } /*
-  gameOverLoop() {
-    this.runLogic();
-
-    this.clean();
-
-    this.paint();
-
-    if (this.gamestate === false) {
-      setTimeout(() => {
-        this.gameOverLoop();
-      }, 1000 / 60);
-    }
-  }*/
+  }
 }

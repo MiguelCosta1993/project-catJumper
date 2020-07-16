@@ -20,6 +20,11 @@ class Cat {
     this.y = 730;
     this.yVelocity = 0;
   }
+  spriteCat() {
+    let image = new Image();
+    image.src('/sprites/cat_ani/cat_fighter_sprite2.png');
+    let counter = 0;
+  }
 
   catMove(direction) {
     switch (direction) {
