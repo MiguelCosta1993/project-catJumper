@@ -1,7 +1,47 @@
-canvas {
-  background-image: url('/sprites/16617.jpg');
-  background-size: cover;
+body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('https://image.freepik.com/free-vector/cat-seamless-pattern-background_42349-63.jpg');
+}
+div img {
+  margin-bottom: 680px;
+}
+
+canvas {
+  background-image: url('/sprites/16617.jpg');
+  background-size: cover;
+  margin-top: 125px;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin-top: 125px;
+  width: 900px;
+  height: 540px;
+}
+
+button {
+  background-image: url('/sprites/16617.jpg');
+  margin-top: 75px;
+  width: 950px;
+  height: 600px;
+  background-size: cover;
+  position: absolute;
+}
+
+button:active {
+  border: none;
+  outline: none;
+}
+button:hover {
+  cursor: pointer;
+}
+
+button p {
+  color: white;
+  font-size: 40px;
 }

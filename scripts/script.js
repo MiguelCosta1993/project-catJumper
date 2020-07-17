@@ -2,11 +2,20 @@ window.addEventListener('load', () => {
   const canvas = document.getElementById('game');
 
   const game = new Game(canvas);
-  const soundTrack = new Audio('/song/Megalovania.mp3');
-  soundTrack.volume = 0.4;
-  game.loop();
+
   setKeyBindings();
-  soundTrack.play();
+
+  musicplay(game);
+
+  const start = document.getElementById('startGame');
+  start.addEventListener('click', () => {
+    if (game.gamestate.running === false) {
+      game.gamestate.running = true;
+      game.gamestate.menu = false;
+      musicplay(game);
+      game.loop();
+    }
+  });
 
   function setKeyBindings() {
     window.addEventListener('keydown', event => {
@@ -25,7 +34,7 @@ window.addEventListener('load', () => {
           break;
         case 27:
           event.preventDefault();
-          if (!game.gamestate) {
+          if (game.gamestate.gameover) {
             location.reload();
           }
           break;

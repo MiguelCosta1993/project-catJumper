@@ -3,17 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Platform</title>
+    <title>Cat me if you can</title>
     <link href="/styles/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
+    <div><img src="/sprites/title.png" /></div>
     <canvas id="game" width="900" height="540"></canvas>
-
-    />
+    <script src="/scripts/music.js"></script>
     <script src="/scripts/scoreboard.js"></script>
     <script src="/scripts/dog.js"></script>
     <script src="/scripts/cat.js"></script>
     <script src="/scripts/game.js"></script>
     <script src="/scripts/script.js"></script>
+    <button id="startGame" onclick="style.display = 'none'">
+      <p>press A -> Walk left</p>
+      <p>press D -> walk right</p>
+      <p>press SPACE -> jump</p>
+    </button>
   </body>
 </html>

@@ -11,14 +11,26 @@ class Game {
     this.dogsBamboozled = 0;
     this.scoreboard = new Scoreboard(this);
     this.crash = false;
-    this.gamestate = true;
+    this.gamestate = { menu: true, running: false, gameover: false };
     this.difficulty = 1;
     this.spaceDifficulty = 1;
     this.time_since_last_difficulty_change = Date.now();
   }
 
+  startGame() {
+    this.gamestate.running = true;
+    this.gamestate.menu = false;
+    //   setTimeout(() => {
+    //     this.loop();
+    //   }, 1000 / 60);
+    // });
+  }
+
   gameOver() {
-    this.gamestate = false;
+    this.gamestate.running = false;
+    this.gamestate.menu = false;
+    this.gamestate.gameover = true;
+    musicplay(this);
   }
 
   checkCollision() {
@@ -82,7 +94,7 @@ class Game {
     });
     this.scoreboard.paint();
 
-    if (this.gamestate === false) {
+    if (this.gamestate.gameover === true) {
       this.context.rect(0, 0, 960, 540);
       this.context.fillStyle = 'rgba(0,0,0,1)';
       this.context.fill();
@@ -93,6 +105,11 @@ class Game {
       this.context.font = '20px Roboto Mono';
       this.context.fillStyle = 'white';
       this.context.textAlign = 'center';
+      this.context.fillText(
+        'Dogs Bamboozled :' + this.scoreboard.score,
+        480,
+        300
+      );
       this.context.fillText('Press ESC to restart', 480, 330);
     }
   }
@@ -104,8 +121,10 @@ class Game {
 
     this.paint();
 
-    setTimeout(() => {
-      this.loop();
-    }, 1000 / 60);
+    if (this.gamestate.running === true) {
+      setTimeout(() => {
+        this.loop();
+      }, 1000 / 60);
+    }
   }
 }
