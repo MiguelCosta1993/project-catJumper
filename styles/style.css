@@ -26,9 +26,9 @@ div {
 
 button {
   background-image: url('/sprites/16617.jpg');
-  margin-top: 75px;
-  width: 950px;
-  height: 600px;
+  margin-top: 60px;
+  width: 910px;
+  height: 540px;
   background-size: cover;
   position: absolute;
 }
@@ -42,6 +42,6 @@ button:hover {
 }
 
 button p {
-  color: white;
+  color: red;
   font-size: 40px;
 }
