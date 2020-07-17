@@ -2,16 +2,17 @@ class Dog {
   constructor(x, y, game) {
     this.x = x;
     this.y = y;
-    this.w = 40;
-    this.h = 40;
+    this.w = 88;
+    this.h = 72;
     this.game = game;
     this.dogX = 400;
+    this.perro = new Image();
+    this.perro.src = '/sprites/dog no bg.png';
   }
 
   runLogic() {}
 
   paint() {
-    this.game.context.fillStyle = 'black';
-    this.game.context.fillRect(this.x, this.y, this.w, this.h);
+    this.game.context.drawImage(this.perro, this.x, this.y, this.w, this.h);
   }
 }

@@ -6,9 +6,8 @@ class Scoreboard {
 
   paint() {
     this.score = this.game.dogsBamboozled;
-
     this.game.context.font = '16px Roboto Mono';
 
-    this.game.context.fillText('Dogs Bamboozled x:' + this.score, 1425, 25);
+    this.game.context.fillText('Dogs Bamboozled x:' + this.score, 750, 25);
   }
 }

@@ -3,6 +3,7 @@ window.addEventListener('load', () => {
 
   const game = new Game(canvas);
   const soundTrack = new Audio('/song/Megalovania.mp3');
+  soundTrack.volume = 0.4;
   game.loop();
   setKeyBindings();
   soundTrack.play();

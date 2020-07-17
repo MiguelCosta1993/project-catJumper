@@ -2,8 +2,8 @@ class Cat {
   constructor(x, y, game) {
     this.x = x;
     this.y = y;
-    this.w = 60;
-    this.h = 30;
+    this.w = 121;
+    this.h = 90;
     this.yVelocity = 3;
     this.xVelocity = 0;
     this.game = game;
@@ -11,32 +11,33 @@ class Cat {
     this.direction = 'down';
     this.jump = 0;
     this.maxJumps = 2;
+    this.gato = new Image();
+    this.gato.src = '/sprites/cat no bg.png';
   }
 
   setDirection(direction) {
     this.direction = direction;
   }
   grounded() {
-    this.y = 730;
+    this.y = 410;
     this.yVelocity = 0;
-  }
-  spriteCat() {
-    let image = new Image();
-    image.src('/sprites/cat_ani/cat_fighter_sprite2.png');
-    let counter = 0;
   }
 
   catMove(direction) {
     switch (direction) {
       case 'right':
-        this.xVelocity = 5;
+        if (this.x <= 900) {
+          this.xVelocity = 5;
+        }
         break;
       case 'left':
-        this.xVelocity = -5;
+        if (this.x >= 0) {
+          this.xVelocity = -5;
+        }
         break;
       case 'up':
-        if (this.y >= 700) {
-          this.yVelocity = -6;
+        if (this.y >= 350) {
+          this.yVelocity = -7;
         }
         break;
       case 'stopleft':
@@ -58,13 +59,13 @@ class Cat {
 
     //this.xVelocity = this.xVelocity / (1 + friction);
 
-    if (this.y >= 720) {
+    if (this.y >= 410) {
       this.yVelocity = 0;
     }
   }
 
   paint() {
-    this.game.context.fillStyle = 'red';
-    this.game.context.fillRect(this.x, this.y, this.w, this.h);
+    this.game.context.drawImage(this.gato, this.x, this.y, this.w, this.h);
+    //this.game.context.fillRect(this.x, this.y, this.w, this.h);
   }
 }

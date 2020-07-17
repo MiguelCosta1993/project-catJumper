@@ -1,3 +1,7 @@
 canvas {
-  background-image: url('/sprites/Cartoon_Forest_BG_01.png');
+  background-image: url('/sprites/16617.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,12 +1,12 @@
-const FLOORHEIGHT = 710;
-const DOGXPOSITION = 700;
-const MAXDOGS = 10;
+const FLOORHEIGHT = 420;
+const DOGXPOSITION = 100;
+const MAXDOGS = 5;
 
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
-    this.player = new Cat(100, 400, this);
+    this.player = new Cat(50, 350, this);
     this.dogs = [];
     this.dogsBamboozled = 0;
     this.scoreboard = new Scoreboard(this);
@@ -24,9 +24,9 @@ class Game {
   checkCollision() {
     this.dogs.forEach(dog => {
       if (
-        this.player.x + this.player.w >= dog.x &&
-        this.player.y + this.player.h >= dog.y &&
-        this.player.x <= dog.x + dog.w
+        this.player.x + this.player.w - 10 >= dog.x + 40 &&
+        this.player.y + this.player.h >= dog.y + 30 &&
+        this.player.x <= dog.x + dog.w - 40
       ) {
         this.crash = true;
         this.gameOver();
@@ -36,7 +36,7 @@ class Game {
 
   runLogic() {
     this.dogs.map(actor => {
-      actor.x = actor.x - 10 * this.difficulty;
+      actor.x = actor.x - 9 * this.difficulty;
     });
 
     if (this.dogs.length && this.dogs[0].x + this.dogs[0].w <= 0) {
@@ -45,7 +45,7 @@ class Game {
     this.dogs = this.dogs.filter(dog => dog.x + dog.w > 0);
 
     if (Date.now() - this.time_since_last_difficulty_change > 15000) {
-      this.difficulty += 0.2;
+      this.difficulty += 0.1;
       this.time_since_last_difficulty_change = Date.now();
     }
 
@@ -54,7 +54,6 @@ class Game {
         let acceptablePosition = 0;
         while (!acceptablePosition) {
           acceptablePosition = DOGXPOSITION + Math.floor(Math.random() * 100);
-          console.log(acceptablePosition);
           if (
             this.dogs.every(
               dog =>
@@ -62,7 +61,7 @@ class Game {
                 dog.x - acceptablePosition < 200
             )
           ) {
-            this.dogs.push(new Dog(1600, FLOORHEIGHT, this));
+            this.dogs.push(new Dog(900, FLOORHEIGHT, this));
           }
         }
       }
@@ -77,8 +76,6 @@ class Game {
   }
 
   paint() {
-    this.context.fillStyle = 'green';
-    this.context.fillRect(0, 750, 1600, 100);
     this.player.paint();
     this.dogs.forEach(dog => {
       dog.paint();
@@ -86,17 +83,17 @@ class Game {
     this.scoreboard.paint();
 
     if (this.gamestate === false) {
-      this.context.rect(0, 0, 1600, 800);
+      this.context.rect(0, 0, 960, 540);
       this.context.fillStyle = 'rgba(0,0,0,1)';
       this.context.fill();
       this.context.font = '60px Roboto Mono';
       this.context.fillStyle = 'white';
       this.context.textAlign = 'center';
-      this.context.fillText('Game Over', 800, 400);
+      this.context.fillText('Game Over', 480, 270);
       this.context.font = '20px Roboto Mono';
       this.context.fillStyle = 'white';
       this.context.textAlign = 'center';
-      this.context.fillText('Press ESC to restart', 800, 500);
+      this.context.fillText('Press ESC to restart', 480, 330);
     }
   }
 
